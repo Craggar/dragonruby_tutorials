@@ -1,6 +1,6 @@
 ## Introduction
 
-This is the fourth part of a series of tutorials building a top-down 'Roguelike' game. In the previous installments we created a basic framework for our classes, controllers, entities, etc, and got some 'Static Entities' in the form of map tiles drawn on the screen, and got our player entity rendered and moving around the screen, making the map/camera follow the player, and enabling tile-based collisions with the map. We also added our first enemies, and gave them a basic random movement/patrol behaviour and a 'seek player' behaviour, as well as introducing the concept of entities 'occupying' a tile, preventing other entities moving into them, to form our basic entity-to-entity collision. We also took a brief aside to look at some Render Targets.
+This is the eighth part of a series of tutorials building a top-down 'Roguelike' game. In the previous installments we created a basic framework for our classes, controllers, entities, etc, and got some 'Static Entities' in the form of map tiles drawn on the screen, and got our player entity rendered and moving around the screen, making the map/camera follow the player, and enabling tile-based collisions with the map. We also added our first enemies, and gave them a basic random movement/patrol behaviour and a 'seek player' behaviour, as well as introducing the concept of entities 'occupying' a tile, preventing other entities moving into them, to form our basic entity-to-entity collision. We also took a brief aside to look at some Render Targets.
 
 I recommend you familiarise yourself with the previous parts, and we'll be using the 'final code' from the previous tutorial as our starting point here.
 
@@ -43,7 +43,7 @@ We want our enemies and our Player to have `defender` behaviour, so they have HP
 ```ruby
 # /ascii/app/entities/enemy.rb
 module Entities
-  class Enemy < MotileEntity
+  class Enemy < MobileEntity
     include ::Behaviour::Defender
     VISIBLE_RANGE = 300
 
@@ -69,7 +69,7 @@ And finally our player, whom I'm giving 50 HP and 10 DEF:
 ```ruby
 # /ascii/app/entities/player.rb
 module Entities
-  class Player < MotileEntity
+  class Player < MobileEntity
     include ::Behaviour::Defender
 
     attr_reader :took_action
@@ -110,7 +110,7 @@ Then include the Attacker behaviour in `Player`:
 ```ruby
 # /ascii/app/entities/player.rb
 module Entities
-  class Player < MotileEntity
+  class Player < MobileEntity
     include ::Behaviour::Defender
     include ::Behaviour::Attacker
 ```
@@ -131,7 +131,7 @@ We also want enemies to be able to attack, so add the behaviour in `Enemy`:
 ```ruby
 # /ascii/app/entities/enemy.rb
 module Entities
-  class Player < MotileEntity
+  class Player < MobileEntity
     include ::Behaviour::Defender
     include ::Behaviour::Attacker
 ```
@@ -201,11 +201,11 @@ end
 
 ## (Actually) Attack!
 
-Now we can check if things can be hurt, and we can get the occupant of a blocking tile, we want to hurt them. We're going to extend the `attempt_move` method, and give it a better name as it will be attacking too. So we're going to rename it to `move_or_attack` within the `app/entities/motile_entity.rb`, and make sure you update the calls to this method in both `player.rb` and `enemy.rb`.
+Now we can check if things can be hurt, and we can get the occupant of a blocking tile, we want to hurt them. We're going to extend the `attempt_move` method, and give it a better name as it will be attacking too. So we're going to rename it to `move_or_attack` within the `app/entities/mobile_entity.rb`, and make sure you update the calls to this method in both `player.rb` and `enemy.rb`.
 
 And now we expand this renamed `move_or_attack` method:
 ```ruby
-# /ascii/app/entities/motile_entity.rb
+# /ascii/app/entities/mobile_entity.rb
 def move_or_attack(args, target_x, target_y)
   tile_x = ::Controllers::MapController.map_x_to_tile_x(target_x)
   tile_y = ::Controllers::MapController.map_y_to_tile_y(target_y)

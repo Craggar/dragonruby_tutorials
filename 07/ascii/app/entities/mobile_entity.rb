@@ -1,5 +1,7 @@
 module Entities
-  class MotileEntity < Base
+  class MobileEntity < Base
+    include ::Behaviour::Occupant
+
     def self.spawn(tile_x, tile_y)
       new(
         map_x: tile_x * SPRITE_WIDTH,
@@ -17,6 +19,10 @@ module Entities
       yield if block_given?
       @x = map_x - args.state.map.x
       @y = map_y - args.state.map.y
+    end
+
+    def blocking?
+      true
     end
   end
 end

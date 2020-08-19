@@ -17,7 +17,7 @@ end
 
 > We're using the `attr_sprite` mixin which lets us treat our entities as sprites, without having to do much transforming, or manually producing a hash/array. It automatically gives you x, y, w (width), h (height), path (sprite image path) attributes on your model
 
-There will be plenty of entity types, but I want to start with two core distinctions: static entities (walls, floor, etc) and motile entities (players, enemies, projectiles). Using these base classes for future inheritance lets us group behaviours that are common to their inheritors. So let's start with a static entity, and two types of static entities - walls and floors.
+There will be plenty of entity types, but I want to start with two core distinctions: static entities (walls, floor, etc) and mobile entities (players, enemies, projectiles). Using these base classes for future inheritance lets us group behaviours that are common to their inheritors. So let's start with a static entity, and two types of static entities - walls and floors.
 
 Create a file at `/app/entities/static_entity.rb`, and fill it with the following code.
 

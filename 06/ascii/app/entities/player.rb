@@ -1,5 +1,5 @@
 module Entities
-  class Player < MotileEntity
+  class Player < MobileEntity
     attr_reader :took_action
 
     def initialize(opts = {})

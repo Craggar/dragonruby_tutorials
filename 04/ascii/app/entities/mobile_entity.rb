@@ -1,5 +1,5 @@
 module Entities
-  class MotileEntity < Base
+  class MobileEntity < Base
     def self.spawn(tile_x, tile_y)
       new(
         map_x: tile_x * SPRITE_WIDTH,

@@ -1,5 +1,5 @@
 module Entities
-  class Enemy < MotileEntity
+  class Enemy < MobileEntity
     def tick(args)
       patrol(args)
       @x = map_x - args.state.map.x

@@ -1,5 +1,5 @@
 module Entities
-  class Enemy < MotileEntity
+  class Enemy < MobileEntity
     include ::Behaviour::Defender
     include ::Behaviour::Attacker
     VISIBLE_RANGE = 300

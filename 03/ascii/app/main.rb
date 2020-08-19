@@ -7,7 +7,7 @@ require 'app/entities/base.rb'
 require 'app/entities/static_entity.rb'
 require 'app/entities/wall.rb'
 require 'app/entities/floor.rb'
-require 'app/entities/motile_entity.rb'
+require 'app/entities/mobile_entity.rb'
 require 'app/entities/player.rb'
 
 $game ||= Game.new

@@ -1,6 +1,6 @@
 ## Introduction
 
-This is the fourth part of a series of tutorials building a top-down 'Roguelike' game. In the previous installments we created a basic framework for our classes, controllers, entities, etc, and got some 'Static Entities' in the form of map tiles drawn on the screen. We have both a Player entity and Enemey entities which are capable of movement, tile-based and entity-to-entity collisions, and can attack one another and take damage. The camera follows the player as the traverse the map. We also took a brief aside to look at some Render Targets.
+This is the ninth part of a series of tutorials building a top-down 'Roguelike' game. In the previous installments we created a basic framework for our classes, controllers, entities, etc, and got some 'Static Entities' in the form of map tiles drawn on the screen. We have both a Player entity and Enemey entities which are capable of movement, tile-based and entity-to-entity collisions, and can attack one another and take damage. The camera follows the player as the traverse the map. We also took a brief aside to look at some Render Targets.
 
 I recommend you familiarise yourself with the previous parts, and we'll be using the 'final code' from the previous tutorial as our starting point here.
 
@@ -176,9 +176,9 @@ def faction
 end
 ```
 
-Then, to stop factions attacking each other (and we'll make them leave the neutrals alone), we change the `MotileEntity`'s `move_or_attack` to be wary of the factions:
+Then, to stop factions attacking each other (and we'll make them leave the neutrals alone), we change the `MobileEntity`'s `move_or_attack` to be wary of the factions:
 ```ruby
-# /ascii/app/behaviour/motile_entity.rb
+# /ascii/app/behaviour/mobile_entity.rb
 if respond_to?(:deal_damage) && other && (other.faction != 'neutral' && other.faction != faction)
   deal_damage(other)
   yield

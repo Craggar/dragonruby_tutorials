@@ -1,5 +1,5 @@
 module Entities
-  class Enemy < MotileEntity
+  class Enemy < MobileEntity
     VISIBLE_RANGE = 300
 
     def tick(args)

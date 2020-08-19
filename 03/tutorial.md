@@ -3,20 +3,20 @@ This is the third part of a series of tutorials building a top-down 'Roguelike' 
 
 I recommend you familiarise yourself with the previous parts, and we'll be using the 'final code' from the previous tutorial as our starting point here.
 
-This tutorial will create our first motile entity - those that can move around - our Player.
+This tutorial will create our first mobile entity - those that can move around - our Player.
 
 ## The Player
-The simplest place to start is a player entity, but first lets set up our `MotileEntity` base class. Create a new file `/app/entities/motile_entity.rb`. Make sure to include this file within `main.rb` with:
+The simplest place to start is a player entity, but first lets set up our `MobileEntity` base class. Create a new file `/app/entities/mobile_entity.rb`. Make sure to include this file within `main.rb` with:
 ```ruby
 # /ascii/app/main.rb
-require 'app/entities/motile_entity.rb'
+require 'app/entities/mobile_entity.rb'
 ```
 
-This will, for now, be the same as our `Entities::StaticEntity` class, but serves as a place to hang any common behaviours or attributes that motile entities share. Put this code in the file:
+This will, for now, be the same as our `Entities::StaticEntity` class, but serves as a place to hang any common behaviours or attributes that mobile entities share. Put this code in the file:
 ```ruby
-# /ascii/app/entities/motile_entity.rb
+# /ascii/app/entities/mobile_entity.rb
 module Entities
-  class MotileEntity < Base
+  class MobileEntity < Base
   end
 end
 ```
@@ -24,7 +24,7 @@ Next create `/app/entities/player.rb`, and fill in with this:
 ```ruby
 # /ascii/app/entities/player.rb
 module Entities
-  class Player < MotileEntity
+  class Player < MobileEntity
     def initialize(opts = {})
       super
       @path = 'app/sprites/player.png'
@@ -40,9 +40,9 @@ Then, of course, include it in `main.rb`:
 require 'app/entities/player.rb'
 ```
 
-To create a new player, we want a class-level (rather than instance level) spawn method. This is likely to be shared by most motile entities, so within `app/entities/motile_entity.rb` add a `spawn` method:
+To create a new player, we want a class-level (rather than instance level) spawn method. This is likely to be shared by most mobile entities, so within `app/entities/mobile_entity.rb` add a `spawn` method:
 ```ruby
-# /ascii/app/entities/motile_entity.rb
+# /ascii/app/entities/mobile_entity.rb
 def self.spawn(tile_x, tile_y)
   new(
     x: tile_x * SPRITE_WIDTH,

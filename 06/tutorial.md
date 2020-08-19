@@ -1,6 +1,6 @@
 ## Introduction
 
-This is the fourth part of a series of tutorials building a top-down 'Roguelike' game. In the previous installments we created a basic framework for our classes, controllers, entities, etc, and got some 'Static Entities' in the form of map tiles drawn on the screen, and got our player entity rendered and moving around the screen, making the map/camera follow the player, and enabling tile-based collisions with the map. We also added our first enemies, and gave them a basic random movement/patrol behaviour
+This is the sixth part of a series of tutorials building a top-down 'Roguelike' game. In the previous installments we created a basic framework for our classes, controllers, entities, etc, and got some 'Static Entities' in the form of map tiles drawn on the screen, and got our player entity rendered and moving around the screen, making the map/camera follow the player, and enabling tile-based collisions with the map. We also added our first enemies, and gave them a basic random movement/patrol behaviour
 
 I recommend you familiarise yourself with the previous parts, and we'll be using the 'final code' from the previous tutorial as our starting point here.
 
@@ -113,9 +113,9 @@ end
   end
 ```
 
-We also want to set moving entities to be blocking, so set this on the `MotileEntity`:
+We also want to set moving entities to be blocking, so set this on the `MobileEntity`:
 ```ruby
-# /ascii/app/entities/motile_entity.rb
+# /ascii/app/entities/mobile_entity.rb
 def blocking?
   true
 end
@@ -159,11 +159,11 @@ Remember to include this file in `main.rb`. Make sure you do so after the `Contr
 require 'app/behaviour/occupant.rb'
 ```
 
-Include this 'behaviour' into the `MotileEntity`:
+Include this 'behaviour' into the `MobileEntity`:
 ```ruby
-# /ascii/app/entities/motile_entity.rb
+# /ascii/app/entities/mobile_entity.rb
 module Entities
-  class MotileEntity < Base
+  class MobileEntity < Base
     include ::Behaviour::Occupant
 ```
 

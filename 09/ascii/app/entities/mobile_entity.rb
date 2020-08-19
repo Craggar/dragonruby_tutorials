@@ -1,5 +1,5 @@
 module Entities
-  class MotileEntity < Base
+  class MobileEntity < Base
     include ::Behaviour::Occupant
 
     def self.spawn(tile_x, tile_y)

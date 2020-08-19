@@ -1,5 +1,5 @@
 module Entities
-  class Player < MotileEntity
+  class Player < MobileEntity
     def initialize(opts = {})
       super
       @path = 'app/sprites/player.png'

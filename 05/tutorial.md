@@ -1,6 +1,6 @@
 ## Introduction
 
-This is the fourth part of a series of tutorials building a top-down 'Roguelike' game. In the previous installments we created a basic framework for our classes, controllers, entities, etc, and got some 'Static Entities' in the form of map tiles drawn on the screen, and got our player entity rendered and moving around the screen, making the map/camera follow the player, and enabling tile-based collisions with the map.
+This is the fifth part of a series of tutorials building a top-down 'Roguelike' game. In the previous installments we created a basic framework for our classes, controllers, entities, etc, and got some 'Static Entities' in the form of map tiles drawn on the screen, and got our player entity rendered and moving around the screen, making the map/camera follow the player, and enabling tile-based collisions with the map.
 
 I recommend you familiarise yourself with the previous parts, and we'll be using the 'final code' from the previous tutorial as our starting point here.
 
@@ -11,7 +11,7 @@ Create a new file at `/app/entities/enemy.rb`, which will serve as our core `Ene
 ```ruby
 # /ascii/app/entities/enemy.rb
 module Entities
-  class Enemy < MotileEntity
+  class Enemy < MobileEntity
   end
 end
 
@@ -102,7 +102,7 @@ Within `player.rb`, at the top of the class definition, add an `attr_reader` cal
 ```ruby
 # /ascii/app/entities/player.rb
 module Entities
-  class Player < MotileEntity
+  class Player < MobileEntity
     attr_reader :took_action
     # ...etc
 ```

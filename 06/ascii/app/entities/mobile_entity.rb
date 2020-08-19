@@ -1,5 +1,5 @@
 module Entities
-  class MotileEntity < Base
+  class MobileEntity < Base
     include ::Behaviour::Occupant
 
     def self.spawn(tile_x, tile_y)
@@ -9,20 +9,14 @@ module Entities
       )
     end
 
-    def move_or_attack(args, target_x, target_y)
+    def attempt_move(args, target_x, target_y)
       tile_x = ::Controllers::MapController.map_x_to_tile_x(target_x)
       tile_y = ::Controllers::MapController.map_y_to_tile_y(target_y)
-      if ::Controllers::MapController.blocked?(args, tile_x, tile_y)
-        other = ::Controllers::MapController.tile_occupant(args, tile_x, tile_y)
-        if respond_to?(:deal_damage) && other
-          deal_damage(other)
-          yield
-        end
-      else
-        @map_x = target_x
-        @map_y = target_y
-        yield if block_given?
-      end
+      return if ::Controllers::MapController.blocked?(args, tile_x, tile_y)
+
+      @map_x = target_x
+      @map_y = target_y
+      yield if block_given?
       @x = map_x - args.state.map.x
       @y = map_y - args.state.map.y
     end

@@ -69,9 +69,9 @@ def self.tile_for(tile_x, tile_y, tile_type)
   )
 end
 ```
-And in the `MotileEntity` change `spawn` to assign `map_x` and `map_y` instead of `x` and `y`:
+And in the `MobileEntity` change `spawn` to assign `map_x` and `map_y` instead of `x` and `y`:
 ```ruby
-# /ascii/app/entities/motile_entity.rb
+# /ascii/app/entities/mobile_entity.rb
 def self.spawn(tile_x, tile_y)
   new(
     map_x: tile_x * SPRITE_WIDTH,
@@ -187,7 +187,7 @@ Run the code now, and the landscape will be more interesting.
 
 
 ## Blocking Movement
-Next up we're going to look at keeping entities within bounds. To do this we'll create a common `attempt_move` method on `MotileEntity` that can be used to check if the tile is in bounds (and later used for collision detection against other blocking entities - either static or motile).
+Next up we're going to look at keeping entities within bounds. To do this we'll create a common `attempt_move` method on `MobileEntity` that can be used to check if the tile is in bounds (and later used for collision detection against other blocking entities - either static or mobile).
 
 Before we can do that, we need a way of translating any entity's `map_x, map_y` position into a `tile_x, tile_y` position. I feel like the MapController is a good place to hold this logic, as that's the part of the code that's knowledgable about the tile width, etc. So within `map_controller.rb` add the following method definitions, which convert a world x/y position in pixels into a tile position on the map:
 ```ruby
@@ -242,9 +242,9 @@ end
 ```
 
 ## Attempting Movement
-In `MotileEntity` we now need to add the `attempt_move` method:
+In `MobileEntity` we now need to add the `attempt_move` method:
 ```ruby
-# /ascii/app/entities/motile_entity.rb
+# /ascii/app/entities/mobile_entity.rb
 def attempt_move(args, target_x, target_y)
   tile_x = ::Controllers::MapController.map_x_to_tile_x(target_x)
   tile_y = ::Controllers::MapController.map_y_to_tile_y(target_y)

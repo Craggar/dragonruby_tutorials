@@ -1,6 +1,6 @@
 ## Introduction
 
-This is the fourth part of a series of tutorials building a top-down 'Roguelike' game. In the previous installments we created a basic framework for our classes, controllers, entities, etc, and got some 'Static Entities' in the form of map tiles drawn on the screen. We have both a Player entity and Enemey entities which are capable of movement, tile-based and entity-to-entity collisions, and can attack one another and take damage. The camera follows the player as the traverse the map. We also took a brief aside to look at some Render Targets.
+This is the tenth part of a series of tutorials building a top-down 'Roguelike' game. In the previous installments we created a basic framework for our classes, controllers, entities, etc, and got some 'Static Entities' in the form of map tiles drawn on the screen. We have both a Player entity and Enemey entities which are capable of movement, tile-based and entity-to-entity collisions, and can attack one another and take damage. The camera follows the player as the traverse the map. We also took a brief aside to look at some Render Targets.
 
 I recommend you familiarise yourself with the previous parts, and we'll be using the 'final code' from the previous tutorial as our starting point here.
 

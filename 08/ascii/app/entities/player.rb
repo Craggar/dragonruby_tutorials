@@ -1,5 +1,5 @@
 module Entities
-  class Player < MotileEntity
+  class Player < MobileEntity
     include ::Behaviour::Attacker
     include ::Behaviour::Defender
 
