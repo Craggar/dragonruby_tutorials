@@ -6,10 +6,10 @@ module Entities
     SPRITE_HEIGHT = 32
 
     def initialize(opts = {})
-      @x = opts[:x] ||= 0
-      @y = opts[:y] ||= 0
-      @w = opts[:w] ||= SPRITE_WIDTH
-      @h = opts[:h] ||= SPRITE_HEIGHT
+      @x = opts[:x] || 0
+      @y = opts[:y] || 0
+      @w = opts[:w] || SPRITE_WIDTH
+      @h = opts[:h] || SPRITE_HEIGHT
       @path = opts[:path] || 'app/sprites/null_sprite.png'
     end
 

@@ -56,10 +56,10 @@ We're going to be using all these entities to create the map, but of course we w
 ```ruby
 # /ascii/app/entities/base.rb
 def initialize(opts = {})
-  @x = opts[:x] ||= 0
-  @y = opts[:y] ||= 0
-  @w = opts[:w] ||= SPRITE_WIDTH
-  @h = opts[:h] ||= SPRITE_HEIGHT
+  @x = opts[:x] || 0
+  @y = opts[:y] || 0
+  @w = opts[:w] || SPRITE_WIDTH
+  @h = opts[:h] || SPRITE_HEIGHT
   @path = opts[:path] || 'app/sprites/null_sprite.png'
 end
 ```

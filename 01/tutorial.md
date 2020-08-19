@@ -114,7 +114,7 @@ active_controller.render(args.state, sprites, labels)
 ```
 It may not look like much, but the active controller is now being set and its tick/render methods being called. Next up we need to get the active controller to do something with these methods.
 
-## The First Output - Lablels
+## The First Output - Labels
 Within the `title_controller.rb`, in the render method add the following lines:
 ```ruby
 # /ascii/app/controllers/title_controller.rb#render

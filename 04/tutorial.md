@@ -50,8 +50,8 @@ Then in the `initialize` method, change the part where we assign x/y from the op
 ```ruby
 # /ascii/app/entities/base.rb
 def initialize(opts = {})
-  @map_x = opts[:map_x] ||= 0
-  @map_y = opts[:map_y] ||= 0
+  @map_x = opts[:map_x] || 0
+  @map_y = opts[:map_y] || 0
   @x = map_x
   @y = map_y
   # ...etc
