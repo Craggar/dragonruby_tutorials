@@ -12,7 +12,7 @@ As it stands our game uses the entire screen to render the map, and the characte
 
 I'm going to go for a left/right split, but first let's create our first in-game render target.
 
-As it stands, our primary rendering `Controllers` (`GameController` and `TitleController`), expect `state` passed into their `render` methods. As we're about to start using render targets, we need the `state` in here. So in `Game` change the `active_controller.render...` call to:
+As it stands, our primary rendering `Controllers` (`GameController` and `TitleController`), expect `state` passed into their `render` methods. As we're about to start using render targets, we need the `args` in here. So in `Game` change the `active_controller.render...` call to:
 ```ruby
 # /ascii/app/game.rb
 active_controller.render(args, sprites, labels)
