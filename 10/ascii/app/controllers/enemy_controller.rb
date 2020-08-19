@@ -12,10 +12,6 @@ module Controllers
       30.times do
         tile_x = (::Controllers::MapController::MAP_WIDTH * rand).floor
         tile_y = (::Controllers::MapController::MAP_HEIGHT * rand).floor
-        while state.map.tiles[tile_x][tile_y].blocking?
-          tile_x = (::Controllers::MapController::MAP_WIDTH * rand).floor
-          tile_y = (::Controllers::MapController::MAP_HEIGHT * rand).floor
-        end
         spawn_enemy(
           state,
           tile_x,
@@ -26,7 +22,8 @@ module Controllers
     end
 
     def self.spawn_enemy(state, tile_x, tile_y, enemy_type)
-      state.enemies << enemy_type.spawn(
+      state.enemies << enemy_type.spawn_near(
+        state,
         tile_x,
         tile_y
       )

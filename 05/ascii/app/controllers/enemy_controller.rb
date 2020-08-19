@@ -21,7 +21,8 @@ module Controllers
     end
 
     def self.spawn_enemy(state, tile_x, tile_y, enemy_type)
-      state.enemies << enemy_type.spawn(
+      state.enemies << enemy_type.spawn_near(
+        state,
         tile_x,
         tile_y
       )

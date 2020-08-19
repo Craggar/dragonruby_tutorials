@@ -213,29 +213,3 @@ end
 ```
 
 Remove the `puts` from the `Attacker` behaviour, and the one from the `Defender` behaviour.
-
-## Spawning Safely
-At the moment, players, enemies, etc can spawn anywhere, even on top of a wall piece. So we want to check whether a tile is `blocked` before spawning.
-
-In `GameController`'s `reset` method replace the naive `state.player = ::Entities::Player.spawn(tile_x, tile_y` with:
-```ruby
-# /ascii/app/controllers/game_controller.rb#reset
-tile_x = (1..15).to_a.sample
-tile_y = (1..15).to_a.sample
-while state.map.tiles[tile_x][tile_y].blocking?
-  tile_x = (1..15).to_a.sample
-  tile_y = (1..15).to_a.sample
-end
-state.player = ::Entities::Player.spawn(tile_x, tile_y)
-```
-
-And within the `EnemyController`'s `spawn_enemies` method, add a loop just after the tile_x/tile_y are randomized to re-calc them if they lead to a blocked tile:
-```ruby
-# /ascii/app/controllers/enemy_controller.rb#spawn_enemies
-tile_x = (::Controllers::MapController::MAP_WIDTH * rand).floor
-tile_y = (::Controllers::MapController::MAP_HEIGHT * rand).floor
-while state.map.tiles[tile_x][tile_y].blocking?
-  tile_x = (::Controllers::MapController::MAP_WIDTH * rand).floor
-  tile_y = (::Controllers::MapController::MAP_HEIGHT * rand).floor
-end
-```

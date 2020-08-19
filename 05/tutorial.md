@@ -95,6 +95,51 @@ end
 ```
 Run the game and you should see your Zombies showing up on the map (it's random, so try a couple of times if you don't see anything - and make sure you've copied the `zombie.png` from the examples folder into `app/sprites`).
 
+## Spawning Safely
+At the moment, players, enemies, etc can spawn anywhere, even on top of a wall piece. So we want to check whether a tile is `blocked` before spawning.
+
+In `MobileEntity`, let's replace the `spawn` method with a `spawn_near` method, and pass the `state` to it. It will _try_ to spawn on the exact spot, but if that fails, we'll gradually increase the radius we're searching in and sample a few spots, until we find a space nearby to spawn.
+```ruby
+# /ascii/app/entities/mobile_entity.rb
+def self.spawn_near(state, spawn_x, spawn_y)
+  radius = 1
+  attempt = 0
+  tile = state.map.tiles[spawn_x][spawn_y]
+  while tile.nil? || tile.blocking?
+    spawn_x = (spawn_x - radius..spawn_x + radius).to_a.sample
+    spawn_y = (spawn_y - radius..spawn_y + radius).to_a.sample
+    tile = state.map.tiles[spawn_x][spawn_y]
+    attempt += 1
+    next unless attempt >= radius * 8
+
+    radius += 1
+    attempt = 0
+  end
+  new(
+    map_x: spawn_x * SPRITE_WIDTH,
+    map_y: spawn_y * SPRITE_HEIGHT
+  )
+end
+```
+
+Update the `GameController` to call `spawn_near` and pass the state:
+```ruby
+# /ascii/app/controllers/game_controller.rb#reset
+state.player = ::Entities::Player.spawn_near(state, 10, 11)
+```
+
+And the EnemyController `spawn_enemy` method:
+```ruby
+# /ascii/app/controllers/EnemyController.rb
+def self.spawn_enemy(state, tile_x, tile_y, enemy_type)
+  state.enemies << enemy_type.spawn_near(
+    state,
+    tile_x,
+    tile_y
+  )
+end
+```
+
 ## Shamble?
 Zombies are neat, but they're a bit _static_ like this, so lets get them moving. We'll get them to `patrol` shortly, which will just move the zombies around in random directions when the player takes a turn. First, though, we need a way to track if the player has actually moved this `tick`.
 

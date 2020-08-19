@@ -34,13 +34,7 @@ module Controllers
     def self.reset(state)
       ::Controllers::EventLogsController.reset(state)
       ::Controllers::MapController.load_map(state)
-      tile_x = (1..15).to_a.sample
-      tile_y = (1..15).to_a.sample
-      while state.map.tiles[tile_x][tile_y].blocking?
-        tile_x = (1..15).to_a.sample
-        tile_y = (1..15).to_a.sample
-      end
-      state.player = ::Entities::Player.spawn(tile_x, tile_y)
+      state.player = ::Entities::Player.spawn_near(state, 10, 11)
       ::Controllers::EnemyController.spawn_enemies(state)
     end
   end

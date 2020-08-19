@@ -1,9 +1,22 @@
 module Entities
   class MobileEntity < Base
-    def self.spawn(tile_x, tile_y)
+    def self.spawn_near(state, spawn_x, spawn_y)
+      radius = 1
+      attempt = 0
+      tile = state.map.tiles[spawn_x][spawn_y]
+      while tile.nil? || tile.blocking?
+        spawn_x = (spawn_x - radius..spawn_x + radius).to_a.sample
+        spawn_y = (spawn_y - radius..spawn_y + radius).to_a.sample
+        tile = state.map.tiles[spawn_x][spawn_y]
+        attempt += 1
+        next unless attempt >= radius * 8
+
+        radius += 1
+        attempt = 0
+      end
       new(
-        map_x: tile_x * SPRITE_WIDTH,
-        map_y: tile_y * SPRITE_HEIGHT
+        map_x: spawn_x * SPRITE_WIDTH,
+        map_y: spawn_y * SPRITE_HEIGHT
       )
     end
 

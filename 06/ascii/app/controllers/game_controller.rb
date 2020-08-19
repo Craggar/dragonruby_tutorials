@@ -13,7 +13,7 @@ module Controllers
 
     def self.reset(state)
       ::Controllers::MapController.load_map(state)
-      state.player = ::Entities::Player.spawn(20, 11)
+      state.player = ::Entities::Player.spawn_near(state, 10, 11)
       ::Controllers::EnemyController.spawn_enemies(state)
     end
   end
