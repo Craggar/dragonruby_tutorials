@@ -6,25 +6,12 @@ We're going to be building a top-down 'Roguelike' game where movement is on a ti
 Finally, a disclaimer: This is only _a_ way of doing things - it's not even _my_ only way doing things, let alone _the_ only way of doing things. There may be best/better practices elsewhere, but I'm hoping to help you build something quickly, and learn some of the core concepts of both Ruby and GTK.
 
 ## Getting Started
-To start with, we want a new game folder. Create a new folder called `ascii` and within it create the `app` folder. Then create two files: `main.rb` and `game.rb`.
+To start with, we want a new game folder. Create a new folder called `ascii` and within it create the `app` folder. Then create a file called: `main.rb`. We need a `Game` class to instantiate, so add the following skeleton code:
 
 Within `main.rb` add the following:
 ```ruby
 # /ascii/app/main.rb
-require 'app/game.rb'
 
-$game ||= Game.new
-def tick(args)
-  $game.tick(args)
-end
-```
-> In ruby, we include the code from other files by using the `require` keyword. In GTK, it is necessary that all files other than `main.rb` are "required" at the top of `main.rb`. We're using a relative path here, relative to the 'root' of the Project folder.
-
-> We're assigning a global variable `$game` using the ruby "double pipe"/"or equals". This basically says "get the value of $game, but if it's not already set, set it to `Game.new`". It's a way of executing the `new` code only once to assign the value, thereafter we'll grab the already assigned value (in this case an instance of "Game").
-
-We need a `Game` class to instantiate, so within `game.rb` add the following skeleton code:
-```ruby
-# /ascii/app/game.rb
 class Game
   def tick(args)
     sprites = []
@@ -37,8 +24,14 @@ class Game
     args.outputs.labels << labels
   end
 end
+
+$game ||= Game.new
+def tick(args)
+  $game.tick(args)
+end
 ```
-> `Class Game ... end` declares our `Game` class. In this particular case this is a class we will 'instantiate' (create an Object of type `Game`) by calling `.new` over in `main.rb`. We then call it's `tick` method from over in `main`, letting us make the `Game` class instance the core for all of our game logic.
+
+> `Class Game ... end` declares our `Game` class. In this particular case this is a class we will 'instantiate' (create an Object of type `Game`) by calling `.new` in `main.rb`. We then call it's `tick` method from further in `main`, letting us make the `Game` class instance the core for all of our game logic.
 
 > At the start of tick we create two arrays - sprites and labels for now (there are others primitives like `borders`, `lines`, etc in GTK, but we won't be using them for now), then pass these to the `render` method, which 'shifts' (`<<`) our sprites and labels into the `args.outputs`
 
@@ -72,19 +65,21 @@ end
 
 > the `Module` keyword lets you 'namespace' your code. Namespacing in a module like this can be used to, for example, encapsulate a bunch of useful code into a single library - making it easier to re-use code in other projects - or, in this case, just to namespace core 'concepts', such as Controllers, Entities (players, enemies, etc), and other things.
 
-Now go into `main.rb` and make sure to include this file just under `require 'app/game.rb'`:
+Now go into `main.rb` and make sure to include this file (some people like to create a `require.rb` file in the root of the project, and require all of the files from there, meaning you just need to `require 'app/require.rb'` in  `main.rb`):
 ```ruby
 # /ascii/app/main.rb
-require 'app/game.rb'
-
 require 'app/controllers/title_controller.rb'
 # ... etc
 ```
 
-We then need to add a means of tracking the currently active controller. Within `game.rb`, add the following:
+> In ruby, we include the code from other files by using the `require` keyword. In GTK, it is necessary that all files other than `main.rb` are "required" at the top of `main.rb`. We're using a relative path here, relative to the 'root' of the Project folder.
+
+> We're assigning a global variable `$game` using the ruby "double pipe"/"or equals". This basically says "get the value of $game, but if it's not already set, set it to `Game.new`". It's a way of executing the `new` code only once to assign the value, thereafter we'll grab the already assigned value (in this case an instance of "Game").
+
+We then need to add a means of tracking the currently active controller. Within `main.rb`, add the following:
 
 ```ruby
-# /ascii/app/game.rb
+# /ascii/app/main.rb
 class Game
   attr_reader :active_controller
 
@@ -100,7 +95,7 @@ end
 
 Within the `Game#tick` method, add this as the first line:
 ```ruby
-# /ascii/app/game.rb#tick
+# /ascii/app/main.rb#tick
 goto_title unless active_controller
 ```
 
@@ -108,7 +103,7 @@ goto_title unless active_controller
 
 After the `labels = []` add this, right before the render call:
 ```ruby
-# /ascii/app/game.rb#tick
+# /ascii/app/main.rb#tick
 active_controller.tick(args)
 active_controller.render(args.state, sprites, labels)
 ```
@@ -165,16 +160,14 @@ And again go into `main.rb` and make sure to include this file:
 
 ```ruby
 # /ascii/app/main.rb
-require 'app/game.rb'
-
 require 'app/controllers/title_controller.rb'
 require 'app/controllers/game_controller.rb'
 # ... etc
 ```
 
-Within the `Game`, add a new method, `goto_game`:
+Within the `Game` class, add a new method, `goto_game`:
 ```ruby
-# /ascii/app/game.rb
+# /ascii/app/main.rb
 def goto_game(args)
   ::Controllers::GameController.reset(args.state)
   @active_controller = ::Controllers::GameController
